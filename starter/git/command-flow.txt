@@ -1,0 +1,12 @@
+1. git clone <repository-url>
+2. cd <repository-name>
+3. git checkout -b feat/<your-name>
+4. git status
+5. git add .
+6. git commit -m "docs: practice git flow"
+
+핵심 메모
+- clone: 원격 레포를 내 컴퓨터로 가져옵니다.
+- checkout -b: 새 branch를 만들고 바로 이동합니다.
+- add: commit할 파일을 고릅니다.
+- commit: 이번 작업 묶음을 기록합니다.

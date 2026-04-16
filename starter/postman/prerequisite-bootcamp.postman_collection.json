@@ -1,0 +1,58 @@
+{
+  "info": {
+    "name": "A&I Prerequisite Bootcamp",
+    "_postman_id": "d8fe9a0b-bootcamp-00-aandi",
+    "description": "GET, POST, JSON body practice collection for sequence 00.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "GET Post 1",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://jsonplaceholder.typicode.com/posts/1",
+          "protocol": "https",
+          "host": [
+            "jsonplaceholder",
+            "typicode",
+            "com"
+          ],
+          "path": [
+            "posts",
+            "1"
+          ]
+        }
+      }
+    },
+    {
+      "name": "POST Create Post",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"A&I Bootcamp\",\n  \"body\": \"Postman으로 POST 요청을 보내는 연습입니다.\",\n  \"userId\": 4\n}"
+        },
+        "url": {
+          "raw": "https://jsonplaceholder.typicode.com/posts",
+          "protocol": "https",
+          "host": [
+            "jsonplaceholder",
+            "typicode",
+            "com"
+          ],
+          "path": [
+            "posts"
+          ]
+        }
+      }
+    }
+  ]
+}
