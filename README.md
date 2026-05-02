@@ -1,83 +1,45 @@
 # A&I Prerequisite Bootcamp
 
-> 이후 백엔드 실습에서 막히지 않도록 HTTP, JSON, Postman, Git, DB 기초를 먼저 손으로 익혀보는 준비 단계입니다.
+이 레포는 A&I 백엔드 커리큘럼의 `00. 사전 준비 부트캠프` 시퀀스를 담는 안내 브랜치입니다.
 
-## 이 시퀀스는 무엇인가요
+## 이 레포의 역할
 
-이 레포는 스프링 기능을 구현하는 실습이 아닙니다.
-앞으로 나올 서버 구현 실습 전에 꼭 필요한 감각을 먼저 맞추는 부트캠프입니다.
+- `main`은 안내 브랜치입니다.
+- 학생은 `00-implementation`에서 실습을 시작합니다.
+- 강사는 `00-answer`에서 정답 자료와 비교합니다.
+- 이번 레포는 Spring Boot 구현 전에 필요한 HTTP, JSON, Postman, Git, DB 기초 감각을 맞춥니다.
 
-오늘은 아래 흐름만 분명하게 잡으면 충분합니다.
+## 이 레포에서 배우는 것
 
-1. 요청을 보냅니다.
-2. 응답을 읽습니다.
-3. JSON 값을 바꿔봅니다.
-4. Git 브랜치를 만들어봅니다.
-5. DB 표 구조를 말로 설명해봅니다.
+- GET과 POST 요청의 차이
+- JSON body 수정
+- 상태 코드 읽기
+- Git clone, branch, add, commit 흐름
+- table, row, column, PK 같은 DB 기본 용어
+
+## 브랜치 사용법
+
+1. `main`에서 레포 목적과 브랜치 구조를 확인합니다.
+2. `00-implementation`으로 이동해 starter 자료를 따라갑니다.
+3. 실습을 마친 뒤 `00-answer`와 비교합니다.
+
+```bash
+git fetch origin
+git switch 00-implementation
+```
 
 ## 문서 안내
 
-- [이론 문서](./docs/theory.md)
-- [구현 안내](./docs/implementation.md)
-- [정답 가이드](./docs/answer-guide.md)
-- [체크리스트](./docs/checklist.md)
-- [제공 자료 안내](./docs/assets.md)
+실습 문서는 `00-implementation`, `00-answer` 브랜치에서 확인합니다.
 
-## 오늘 실습 순서
+- `README.md`
+- `docs/theory.md`
+- `docs/implementation.md`
+- `docs/answer-guide.md`
+- `docs/checklist.md`
+- `docs/assets.md`
 
-1. Postman으로 GET 요청 보내기
-2. Postman으로 POST 요청 보내기
-3. JSON body 값 수정하기
-4. `git clone` 해보기
-5. `git checkout -b` 해보기
-6. `git add`, `git commit` 해보기
-7. table, row, column, PK 설명해보기
+## 빠른 확인
 
-구현 순서는 위 순서를 그대로 유지합니다.
-이번 실습에서는 서버 구조 코드를 만들지 않습니다.
-
-## 준비물
-
-- Postman 또는 API 요청 도구
-- Git이 설치된 로컬 환경
-- 텍스트 편집기 또는 IDE
-- 수업 중 사용할 발표 화면 또는 메모 도구
-
-## 미리 제공되는 자료
-
-- `starter/postman/prerequisite-bootcamp.postman_collection.json`
-- `starter/http/get-post.http`
-- `starter/http/create-post.http`
-- `starter/json/create-post-request.json`
-- `starter/git/command-flow.txt`
-- `starter/db/members-table-diagram.txt`
-
-학생은 위 자료를 바탕으로 연습하고, 정답 비교는 `docs/answer-guide.md`와 `answer/` 폴더를 함께 봅니다.
-
-## starter / answer 구조
-
-```text
-starter/
-  postman/
-  http/
-  json/
-  git/
-  db/
-
-answer/
-  http/
-  git/
-  db/
-```
-
-`starter/`는 학생이 실습할 때 바로 열어볼 자료입니다.
-`answer/`는 강사나 학생이 빠르게 비교할 때 쓰는 기준 자료입니다.
-
-## 실습을 마치면 할 수 있어야 하는 것
-
-- GET과 POST의 차이를 말할 수 있습니다.
-- JSON body를 직접 수정할 수 있습니다.
-- 상태 코드를 보고 성공/실패를 구분할 수 있습니다.
-- `git clone`, `git checkout -b`, `git add`, `git commit`을 해볼 수 있습니다.
-- branch를 왜 따로 만드는지 설명할 수 있습니다.
-- table, row, column, PK를 예시로 설명할 수 있습니다.
+이 시퀀스는 서버 코드를 실행하지 않습니다.  
+Postman, HTTP 예시 파일, Git 명령 연습, DB 용어 설명 자료를 사용합니다.
