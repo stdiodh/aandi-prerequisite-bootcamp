@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>A&amp;I Sequence 00 Visual Lab</title>
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./components.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero-section">
+        <div class="hero-kicker" aria-label="Sequence 00">
+          <span class="hero-icon" aria-hidden="true">&lt;/&gt;</span>
+          <span>Sequence 00 Visual Lab</span>
+        </div>
+        <h1 class="hero-title">
+          Sequence 00
+          <span class="hero-title-accent">Backend Prerequisite Visual Lab</span>
+        </h1>
+        <p class="hero-subtitle">
+          백엔드 실습 전에 필요한 기초 개념을 실행 흐름과 시각 자료로 이해합니다.
+        </p>
+        <p class="hero-description">
+          HTTP, API, 서버와 클라이언트, 요청/응답, 데이터 흐름의 기본 개념을 시각적으로 탐색합니다.
+        </p>
+        <div class="hero-divider" aria-hidden="true"></div>
+      </header>
+
+      <main>
+        <section class="topic-section" aria-labelledby="topicSectionTitle">
+          <div class="section-heading">
+            <p class="section-kicker">Prerequisite Topics</p>
+            <h2 id="topicSectionTitle">선수지식 흐름 카드</h2>
+          </div>
+          <div id="topicGrid" class="topic-grid" aria-label="Sequence 00 topic cards"></div>
+        </section>
+
+        <section class="detail-section" aria-labelledby="detailTitle" aria-live="polite">
+          <div class="visual-layout">
+            <article class="visual-card detail-panel">
+              <div class="detail-heading">
+                <p id="detailCategory" class="topic-badge"></p>
+                <h2 id="detailTitle"></h2>
+                <p id="detailEnglishTitle" class="detail-english-title"></p>
+              </div>
+              <p id="detailDescription" class="detail-description"></p>
+              <div class="summary-box">
+                <h3>왜 중요한가</h3>
+                <p id="detailWhy"></p>
+              </div>
+            </article>
+
+            <article class="visual-card flow-panel" aria-labelledby="flowTitle">
+              <h2 id="flowTitle">실행 흐름</h2>
+              <div id="flowTimeline" class="flow-timeline"></div>
+            </article>
+          </div>
+
+          <div class="visual-layout">
+            <article class="visual-card transform-panel" aria-labelledby="transformTitle">
+              <h2 id="transformTitle">데이터 변환</h2>
+              <div id="transformList" class="transform-list"></div>
+            </article>
+
+            <article class="visual-card point-panel" aria-labelledby="pointTitle">
+              <h2 id="pointTitle">핵심 포인트</h2>
+              <ul id="pointList" class="point-list"></ul>
+            </article>
+          </div>
+
+          <div class="visual-layout">
+            <article class="visual-card example-panel" aria-labelledby="exampleTitle">
+              <h2 id="exampleTitle">예시 요청/응답</h2>
+              <div class="example-grid">
+                <pre id="exampleRequest" class="code-box"></pre>
+                <pre id="exampleResponse" class="code-box"></pre>
+              </div>
+            </article>
+
+            <article class="visual-card related-panel" aria-labelledby="relatedTitle">
+              <h2 id="relatedTitle">관련 문서와 코드</h2>
+              <div id="relatedDocs" class="related-list"></div>
+              <div id="relatedCode" class="related-list"></div>
+            </article>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <p>A&amp;I 4기 Code Lab · Sequence 00 Prerequisite Bootcamp</p>
+      </footer>
+    </div>
+
+    <script src="./sequences.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>

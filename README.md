@@ -39,6 +39,26 @@ git switch 00-implementation
 - `docs/checklist.md`
 - `docs/assets.md`
 
+## Sequence 00 Visual Lab
+
+선수지식 부트캠프의 시각화 페이지는 아래 위치에서 확인합니다.
+
+```text
+docs/visual-lab/index.html
+```
+
+로컬 실행:
+
+```bash
+python3 -m http.server 8080 -d docs/visual-lab
+```
+
+접속:
+
+```text
+http://localhost:8080
+```
+
 ## 빠른 확인
 
 이 시퀀스는 서버 코드를 실행하지 않습니다.  
