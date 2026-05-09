@@ -11,12 +11,12 @@
 | `starter/git/command-flow.txt` | clone, branch, add, commit 흐름 확인 | Step 4~6 |
 | `starter/db/members-table-diagram.txt` | table, row, column, PK 설명 | Step 7 |
 
-## 학생이 직접 작성하지 않는 범위
+## 실습에서 직접 작성하지 않는 범위
 
 - Postman 컬렉션
 - HTTP/JSON 예시 입력값
 - Git 최소 명령어 가이드
 - DB 기초 그림 자료
-- 정답 비교 자료
+- 참고 구현 비교 자료
 
-정답 비교 자료는 `00-answer` 브랜치에서 확인합니다.
+참고 구현 비교 자료는 `00-answer` 브랜치에서 확인합니다.
