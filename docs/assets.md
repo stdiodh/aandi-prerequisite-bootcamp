@@ -10,16 +10,13 @@
 | `starter/json/create-post-request.json` | JSON body를 직접 수정해보기 위한 기본 입력값 | Step 3 | 제공 자료 |
 | `starter/git/command-flow.txt` | clone, branch, add, commit 흐름을 빠르게 따라가기 위한 최소 명령어 요약 | Step 4~6 | 제공 자료 |
 | `starter/db/members-table-diagram.txt` | table / row / column / PK를 그림처럼 설명하기 위한 자료 | Step 7 | 제공 자료 |
-| `answer/http/get-post-response.json` | GET 응답 비교용 기준 자료 | Step 1 검토 | 제공 자료 |
-| `answer/http/create-post-response.json` | POST 응답 비교용 기준 자료 | Step 2~3 검토 | 제공 자료 |
-| `answer/git/branch-why.txt` | branch를 왜 나누는지 짧게 정답형으로 확인하는 자료 | Step 5 검토 | 제공 자료 |
-| `answer/db/terms.txt` | DB 기본 용어를 빠르게 검토하는 기준 자료 | Step 7 검토 | 제공 자료 |
+| `00-answer` 브랜치의 비교 자료 | 실습 후 응답, Git, DB 용어를 비교하는 자료 | 수업 후 검토 | 비교 브랜치 자료 |
 
 ## 운영 메모
 
 - 이번 시퀀스는 학생이 코드를 길게 작성하는 단계가 아닙니다.
 - 제공 자료는 학생의 손동작을 빠르게 시작하게 돕는 용도입니다.
-- 정답 비교는 `docs/answer-guide.md`와 `answer/` 폴더를 함께 사용하면 충분합니다.
+- 정답 비교는 실습을 마친 뒤 `00-answer` 브랜치에서만 확인합니다.
 
 ## 학생이 직접 작성하지 않는 범위
 
@@ -29,4 +26,4 @@
 - Git 최소 명령어 가이드
 - HTTP/JSON 예시 입력값
 - DB 기초 그림 자료
-- 빠른 정답 비교 자료
+- 비교 브랜치 자료

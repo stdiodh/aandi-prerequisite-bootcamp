@@ -4,11 +4,12 @@
   --surface: #ffffff;
   --surface-strong: #edf5f2;
   --text: #17212b;
+  --title: #0c2691;
   --muted: #5b6673;
   --line: #d8e1e8;
-  --accent: #0f766e;
-  --accent-dark: #115e59;
-  --accent-soft: #dff5f1;
+  --accent: #2955e4;
+  --accent-dark: #0f766e;
+  --accent-soft: #eaf0fb;
   --focus: #f59e0b;
   --shadow: 0 18px 48px rgba(23, 33, 43, 0.08);
 }
@@ -27,6 +28,7 @@ body {
 
 button {
   font: inherit;
+  letter-spacing: 0;
 }
 
 .app-shell {
@@ -61,6 +63,7 @@ p {
 
 h1 {
   margin: 0;
+  color: var(--title);
   font-size: clamp(2rem, 3vw, 3rem);
   line-height: 1.15;
 }
@@ -68,6 +71,7 @@ h1 {
 h2,
 h3 {
   margin: 0;
+  color: var(--title);
   line-height: 1.25;
 }
 
@@ -76,16 +80,6 @@ h3 {
   margin: 14px 0 0;
   color: var(--muted);
   font-size: 1.05rem;
-}
-
-.branch-label {
-  display: inline-flex;
-  margin: 18px 0 0;
-  padding: 8px 12px;
-  border-radius: 8px;
-  background: var(--accent-soft);
-  color: var(--accent-dark);
-  font-weight: 700;
 }
 
 .panel {
@@ -98,6 +92,12 @@ h3 {
 
 .section-heading {
   margin-bottom: 18px;
+}
+
+.problem-text,
+.empty-state {
+  margin: 0;
+  color: var(--muted);
 }
 
 .concept-grid {
@@ -161,7 +161,8 @@ h3 {
 }
 
 .flow-step:focus-visible,
-.step-controls button:focus-visible {
+.step-controls button:focus-visible,
+.mentor-details summary:focus-visible {
   outline: 3px solid var(--focus);
   outline-offset: 2px;
 }
@@ -194,7 +195,7 @@ h3 {
   font-size: 1.45rem;
 }
 
-.step-detail > p:not(.step-meta):not(.checkpoint) {
+.step-detail > p:not(.step-meta) {
   color: var(--muted);
 }
 
@@ -273,6 +274,16 @@ h3 {
 
 .checkpoint-list li {
   padding-left: 4px;
+}
+
+.mentor-details summary {
+  cursor: pointer;
+  color: var(--title);
+  font-weight: 800;
+}
+
+.mentor-details[open] summary {
+  margin-bottom: 16px;
 }
 
 @media (max-width: 860px) {

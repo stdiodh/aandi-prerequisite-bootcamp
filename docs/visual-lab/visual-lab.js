@@ -31,7 +31,7 @@
     setText("sequenceLabel", `Sequence ${sequence}`);
     setText("labTitle", title);
     setText("labGoal", data.goal || "이 시퀀스의 백엔드 흐름을 단계별로 확인한다.");
-    setText("branchLabel", `시작 브랜치: ${data.implementationBranch || "NN-implementation"}`);
+    setText("problemText", data.problem || "이번 시퀀스에서 해결할 문제를 확인한다.");
   }
 
   function renderConcepts() {
@@ -40,8 +40,14 @@
       return;
     }
 
+    const concepts = data.concepts || [];
     conceptList.replaceChildren();
-    (data.concepts || []).forEach((concept) => {
+    if (concepts.length === 0) {
+      conceptList.appendChild(makeElement("p", "empty-state", "핵심 개념 데이터가 없습니다."));
+      return;
+    }
+
+    concepts.forEach((concept) => {
       const card = makeElement("article", "concept-card");
       card.append(
         makeElement("h3", "", concept.name),
@@ -57,8 +63,14 @@
       return;
     }
 
+    const flow = data.flow || [];
     flowSteps.replaceChildren();
-    (data.flow || []).forEach((step, index) => {
+    if (flow.length === 0) {
+      flowSteps.appendChild(makeElement("p", "empty-state", "학습 흐름 데이터가 없습니다."));
+      return;
+    }
+
+    flow.forEach((step, index) => {
       const button = makeElement("button", "flow-step");
       button.type = "button";
       button.setAttribute("aria-pressed", String(index === state.stepIndex));
@@ -68,7 +80,7 @@
 
       button.append(
         makeElement("strong", "", `${index + 1}. ${step.title}`),
-        makeElement("span", "", `${step.actor} -> ${step.target}`)
+        makeElement("span", "", step.label || step.concept || "Step")
       );
       button.addEventListener("click", () => selectStep(index));
       flowSteps.appendChild(button);
@@ -79,15 +91,24 @@
     const flow = data.flow || [];
     const step = flow[state.stepIndex];
     if (!step) {
+      setText("stepMeta", "");
+      setText("stepTitle", "학습 흐름 데이터가 없습니다.");
+      setText("stepDescription", "");
+      setText("stepProblem", "");
+      setText("stepConcept", "");
+      setText("stepAction", "");
+      setText("stepCheck", "");
+      setText("stepProgress", "0 / 0");
       return;
     }
 
-    setText("stepMeta", `${step.actor} -> ${step.target}`);
+    setText("stepMeta", step.label || step.concept || `Step ${state.stepIndex + 1}`);
     setText("stepTitle", step.title);
     setText("stepDescription", step.description);
-    setText("stepActor", step.actor);
-    setText("stepTarget", step.target);
-    setText("stepCheckpoint", `확인: ${step.checkpoint}`);
+    setText("stepProblem", step.problem);
+    setText("stepConcept", step.concept);
+    setText("stepAction", step.action);
+    setText("stepCheck", step.check);
     setText("stepProgress", `${state.stepIndex + 1} / ${flow.length}`);
 
     const prev = $("prevStep");
@@ -102,21 +123,34 @@
 
   function selectStep(index) {
     const flow = data.flow || [];
-    state.stepIndex = Math.max(0, Math.min(index, flow.length - 1));
+    state.stepIndex = flow.length === 0 ? 0 : Math.max(0, Math.min(index, flow.length - 1));
     renderFlowButtons();
     renderStepDetail();
   }
 
-  function renderCheckpoints() {
-    const checkpointList = $("checkpointList");
-    if (!checkpointList) {
+  function renderList(id, items, emptyText) {
+    const list = $(id);
+    if (!list) {
       return;
     }
 
-    checkpointList.replaceChildren();
-    (data.checkpoints || []).forEach((checkpoint) => {
-      checkpointList.appendChild(makeElement("li", "", checkpoint));
+    list.replaceChildren();
+    if (!items || items.length === 0) {
+      list.appendChild(makeElement("li", "", emptyText));
+      return;
+    }
+
+    items.forEach((item) => {
+      list.appendChild(makeElement("li", "", item));
     });
+  }
+
+  function renderPractice() {
+    renderList("practiceList", data.practice, "실습 확인 항목 데이터가 없습니다.");
+  }
+
+  function renderMentorHints() {
+    renderList("mentorHintList", data.mentorHints, "멘토용 힌트 데이터가 없습니다.");
   }
 
   function bindControls() {
@@ -134,7 +168,8 @@
   function init() {
     renderHeader();
     renderConcepts();
-    renderCheckpoints();
+    renderPractice();
+    renderMentorHints();
     bindControls();
     selectStep(0);
   }

@@ -10,7 +10,7 @@
 
 1. 학생에게 `00-implementation` 브랜치를 안내합니다.
 2. 학생은 starter 자료를 보며 HTTP, JSON, Git, DB 용어를 연습합니다.
-3. 실습 후 `00-answer` 브랜치 또는 `answer/` 자료와 비교합니다.
+3. 실습 후 필요한 경우 `00-answer` 브랜치와 비교합니다.
 
 ## 기존 브랜치 메모
 
