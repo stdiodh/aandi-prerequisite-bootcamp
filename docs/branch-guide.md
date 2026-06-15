@@ -12,7 +12,7 @@
 2. 학생은 starter 자료를 보며 HTTP, JSON, Git, DB 용어를 연습합니다.
 3. 실습 후 필요한 경우 `00-answer` 브랜치와 비교합니다.
 
-## 기존 브랜치 메모
+## 운영 메모
 
 이 레포에는 과거 운영용 `implementation`, `answer` 브랜치가 남아 있을 수 있습니다.  
-정식 수업 운영에서는 `00-implementation`, `00-answer`를 기준으로 사용합니다.
+정식 수업 운영에서는 `main`, `00-implementation`, `00-answer`만 사용합니다.

@@ -5,11 +5,11 @@
 
 ## 이 레포에서 배우는 것
 
-- GET과 POST 요청의 차이
-- JSON body 수정
-- 상태 코드 읽기
-- Git clone, branch, add, commit 흐름
-- table, row, column, PK 같은 DB 기본 용어
+- 요청을 보냈는데 서버가 어떤 뜻으로 응답했는지 읽는 방법
+- GET과 POST를 요청 목적에 맞게 고르는 기준
+- JSON body에서 값을 바꿨을 때 요청 의미가 달라지는 지점
+- Git clone, branch, add, commit으로 작업을 기록하는 흐름
+- table, row, column, PK를 실제 표 예시와 연결하는 방법
 
 ## 시작 방법
 
@@ -98,5 +98,5 @@ http://localhost:8080
 
 ## 운영 메모
 
-legacy `implementation` / `answer` 브랜치가 남아 있다면 deprecated로만 취급합니다.
-정식 수업 운영에서는 `00-implementation` / `00-answer`만 사용합니다.
+legacy `implementation`, `answer` 브랜치가 남아 있다면 deprecated로만 취급합니다.
+정식 수업 운영에서는 `00-implementation`, `00-answer`만 사용합니다.

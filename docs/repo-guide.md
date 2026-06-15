@@ -12,6 +12,14 @@
 - Git 기본 명령
 - DB 기본 용어
 
+## 실제 자료 경로
+
+- `starter/http/get-post.http`
+- `starter/http/create-post.http`
+- `starter/json/create-post-request.json`
+- `starter/git/command-flow.txt`
+- `starter/db/members-table-diagram.txt`
+
 ## 다루지 않는 것
 
 - Spring Boot 애플리케이션 구현
