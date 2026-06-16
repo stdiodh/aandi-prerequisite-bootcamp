@@ -95,8 +95,3 @@ python3 -m http.server 8080 -d docs/visual-lab
 ```text
 http://localhost:8080
 ```
-
-## 운영 메모
-
-legacy `implementation`, `answer` 브랜치가 남아 있다면 deprecated로만 취급합니다.
-정식 수업 운영에서는 `00-implementation`, `00-answer`만 사용합니다.

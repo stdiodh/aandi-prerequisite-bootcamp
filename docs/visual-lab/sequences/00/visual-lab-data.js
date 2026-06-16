@@ -277,7 +277,7 @@ window.visualLabData = {
     {
       "id": "http-request",
       "title": "HTTP 요청은 method, path, body를 함께 봅니다",
-      "file": "Postman 또는 HTTP Client 요청 예시",
+      "file": "starter/http/create-post.http",
       "language": "http",
       "snippet": "POST /posts HTTP/1.1\nContent-Type: application/json\n\n{\n  \"title\": \"첫 글\",\n  \"content\": \"HTTP body 연습\",\n  \"author\": \"aandi\"\n}",
       "explanation": "서버 코드 전에 요청이 어떤 모양으로 이동하는지 먼저 확인합니다.",
@@ -286,7 +286,7 @@ window.visualLabData = {
     {
       "id": "json-body",
       "title": "JSON은 key와 value를 짝으로 읽습니다",
-      "file": "JSON request body 예시",
+      "file": "starter/json/create-post-request.json",
       "language": "json",
       "snippet": "{\n  \"title\": \"수정한 제목\",\n  \"content\": \"값만 바꿔 다시 요청\",\n  \"author\": \"student\"\n}",
       "explanation": "이후 DTO 필드와 JSON key가 연결되므로 key 이름을 정확히 읽습니다.",
@@ -295,7 +295,7 @@ window.visualLabData = {
     {
       "id": "git-flow",
       "title": "실습 브랜치로 이동한 뒤 변경을 기록합니다",
-      "file": "터미널 Git 명령 예시",
+      "file": "starter/git/command-flow.txt",
       "language": "bash",
       "snippet": "git branch --show-current\ngit checkout 00-implementation\ngit status --short\ngit add docs/checklist.md\ngit commit -m \"docs: Record practice check\"",
       "explanation": "실습은 항상 현재 브랜치를 확인한 뒤 작은 변경 단위로 기록합니다.",
@@ -337,9 +337,9 @@ window.visualLabData = {
       "question": "Spring Boot 코드를 보기 전에 요청과 응답을 어떤 언어로 읽어야 할까?",
       "goal": "서버 구현 전 HTTP, JSON, Git, DB 용어를 같은 기준으로 맞춥니다.",
       "source": {
-        "theory": "../theory.md",
-        "implementation": "../implementation.md",
-        "checklist": "../checklist.md"
+        "theory": "../../../theory.md",
+        "implementation": "../../../implementation.md",
+        "checklist": "../../../checklist.md"
       },
       "why": {
         "problem": "다음 시퀀스부터는 서버 실행, HTTP 요청, JSON 응답, branch 이동, DB 용어가 동시에 등장합니다.",
@@ -670,7 +670,7 @@ window.visualLabData = {
         {
           "id": "http-request",
           "title": "HTTP 요청은 method, path, body를 함께 봅니다",
-          "file": "Postman 또는 HTTP Client 요청 예시",
+          "file": "starter/http/create-post.http",
           "language": "http",
           "snippet": "POST /posts HTTP/1.1\nContent-Type: application/json\n\n{\n  \"title\": \"첫 글\",\n  \"content\": \"HTTP body 연습\",\n  \"author\": \"aandi\"\n}",
           "explanation": "서버 코드 전에 요청이 어떤 모양으로 이동하는지 먼저 확인합니다.",
@@ -679,7 +679,7 @@ window.visualLabData = {
         {
           "id": "json-body",
           "title": "JSON은 key와 value를 짝으로 읽습니다",
-          "file": "JSON request body 예시",
+          "file": "starter/json/create-post-request.json",
           "language": "json",
           "snippet": "{\n  \"title\": \"수정한 제목\",\n  \"content\": \"값만 바꿔 다시 요청\",\n  \"author\": \"student\"\n}",
           "explanation": "이후 DTO 필드와 JSON key가 연결되므로 key 이름을 정확히 읽습니다.",
@@ -688,7 +688,7 @@ window.visualLabData = {
         {
           "id": "git-flow",
           "title": "실습 브랜치로 이동한 뒤 변경을 기록합니다",
-          "file": "터미널 Git 명령 예시",
+          "file": "starter/git/command-flow.txt",
           "language": "bash",
           "snippet": "git branch --show-current\ngit checkout 00-implementation\ngit status --short\ngit add docs/checklist.md\ngit commit -m \"docs: Record practice check\"",
           "explanation": "실습은 항상 현재 브랜치를 확인한 뒤 작은 변경 단위로 기록합니다.",
