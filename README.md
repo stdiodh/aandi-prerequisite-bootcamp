@@ -32,6 +32,8 @@ git checkout 00-implementation
 이 시퀀스는 서버 코드를 실행하지 않습니다.
 Postman, HTTP 예시 파일, Git 명령 연습, DB 용어 설명 자료를 사용합니다.
 
+제공 자료는 `starter` 아래의 Postman 컬렉션, HTTP/JSON 예시, Git 명령 흐름, DB 표 자료입니다. 학생은 이 입력을 직접 실행하고 값을 바꾸며 결과를 설명합니다.
+
 ## 테스트 방법
 
 자동 테스트 대신 개발 환경과 기본 손동작을 직접 확인합니다.
@@ -95,3 +97,10 @@ python3 -m http.server 8080 -d docs/visual-lab
 ```text
 http://localhost:8080
 ```
+
+## 문서 안내
+
+- [이론 정리](./docs/theory.md)
+- [구현 안내](./docs/implementation.md)
+- [체크리스트](./docs/checklist.md)
+- [Visual Lab](./docs/visual-lab/index.html)
