@@ -10,6 +10,99 @@ window.visualLabData = {
     "path": "aandi-prerequisite-bootcamp"
   },
   "defaultSequence": "00",
+  "workbench": {
+    "kind": "request",
+    "title": "요청·도구 준비 워크벤치",
+    "instruction": "시나리오를 바꾸며 요청 의도, 응답 증거, 작업 기록이 다음 실습의 어떤 기준이 되는지 확인하세요.",
+    "scenarios": [
+      {
+        "id": "get-response",
+        "label": "GET 응답 읽기",
+        "flowId": "http-request-flow",
+        "tone": "signal",
+        "prompt": "조회 요청의 성공 여부를 body만 보지 않고 어떻게 판단해야 할까요?",
+        "route": [
+          "학생",
+          "Postman/HTTP Client",
+          "API Server",
+          "Postman/HTTP Client",
+          "학생"
+        ],
+        "snapshot": [
+          { "label": "Method", "value": "GET" },
+          { "label": "Status", "value": "200 OK", "tone": "recovered" },
+          { "label": "Body", "value": "JSON 응답" }
+        ],
+        "evidence": "starter/http/get-post.http의 method·URL과 응답 status code·body를 함께 확인합니다.",
+        "outcome": "상태 코드로 조회 성공을 판단하고 JSON body에서 결과 데이터를 읽습니다."
+      },
+      {
+        "id": "post-json",
+        "label": "POST body 바꾸기",
+        "flowId": "http-request-flow",
+        "tone": "recovered",
+        "prompt": "JSON value를 바꾸면 같은 POST 요청의 무엇이 달라질까요?",
+        "route": [
+          "학생",
+          "JSON Body",
+          "Postman/HTTP Client",
+          "API Server",
+          "Postman/HTTP Client"
+        ],
+        "snapshot": [
+          { "label": "Method", "value": "POST" },
+          { "label": "Request", "value": "JSON key/value" },
+          { "label": "Status", "value": "201 Created", "tone": "recovered" }
+        ],
+        "evidence": "starter/json/create-post-request.json의 value를 바꾼 뒤 요청과 생성 응답을 비교합니다.",
+        "outcome": "key는 요청 필드의 이름으로 유지되고 value가 서버에 전달할 실제 내용으로 바뀝니다."
+      },
+      {
+        "id": "invalid-request",
+        "label": "잘못된 요청 형식",
+        "flowId": "http-request-flow",
+        "tone": "blocked",
+        "prompt": "요청 형식이 맞지 않으면 신호는 어디에서 멈추고 무엇을 확인해야 할까요?",
+        "route": [
+          "학생",
+          "JSON Body",
+          "Postman/HTTP Client",
+          "API Server",
+          "JSON 응답"
+        ],
+        "snapshot": [
+          { "label": "Request", "value": "형식 오류", "tone": "blocked" },
+          { "label": "Status", "value": "400 Bad Request", "tone": "blocked" },
+          { "label": "확인", "value": "method · URL · body" }
+        ],
+        "evidence": "요청 도구에서 method, URL, JSON body 형식을 다시 확인하고 400 상태 코드를 읽습니다.",
+        "outcome": "요청을 성공으로 해석하지 않고 입력 형식을 고친 뒤 다시 보냅니다.",
+        "stopAfter": 3
+      },
+      {
+        "id": "record-work",
+        "label": "작업 기록과 DB 용어",
+        "flowId": "git-db-flow",
+        "tone": "signal",
+        "prompt": "다음 실습 전에 작업 위치와 데이터 표 구조를 어떤 증거로 설명할 수 있을까요?",
+        "route": [
+          "학생",
+          "Git CLI",
+          "Git branch",
+          "Local work",
+          "Git commit",
+          "DB Table"
+        ],
+        "snapshot": [
+          { "label": "작업 위치", "value": "현재 branch" },
+          { "label": "변경 기록", "value": "add → commit" },
+          { "label": "DB 기준", "value": "table · row · column · PK" }
+        ],
+        "evidence": "starter/git/command-flow.txt와 starter/db/members-table-diagram.txt를 직접 따라갑니다.",
+        "outcome": "변경을 branch와 commit으로 설명하고 한 row를 PK로 다시 찾는 기준을 말할 수 있습니다."
+      }
+    ]
+  },
   "actors": [
     {
       "id": "student",
