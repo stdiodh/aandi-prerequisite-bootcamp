@@ -10,6 +10,457 @@ window.visualLabData = {
     "path": "aandi-prerequisite-bootcamp"
   },
   "defaultSequence": "00",
+  "workbench": {
+    "kind": "request",
+    "title": "요청·도구 준비 워크벤치",
+    "instruction": "시나리오를 바꾸며 요청 의도, 응답 증거, 작업 기록이 다음 실습의 어떤 기준이 되는지 확인하세요.",
+    "visual": {
+      "src": "../../assets/diagrams/00-request-tool-map.svg",
+      "alt": "학습자가 HTTP Client, 외부 API, Git 기록, DB 표 개념을 오가는 선수지식 시스템 지도",
+      "caption": "요청 증거와 작업 기록을 다음 Spring Boot 실습의 공통 언어로 연결합니다."
+    },
+    "terms": [
+      {
+        "term": "HTTP method",
+        "meaning": "서버에 조회·생성 같은 요청 의도를 전달하는 동사입니다."
+      },
+      {
+        "term": "status code",
+        "meaning": "요청 처리 결과를 세 자리 숫자로 표현한 응답 증거입니다."
+      },
+      {
+        "term": "JSON",
+        "meaning": "key와 value로 요청·응답 데이터를 표현하는 텍스트 형식입니다."
+      },
+      {
+        "term": "PK",
+        "meaning": "테이블에서 한 row를 다시 찾게 해주는 고유 식별 값입니다."
+      }
+    ],
+    "comparison": {
+      "label": "성공 응답을 읽는 두 방식",
+      "left": {
+        "title": "body만 보기",
+        "body": "데이터 모양은 읽을 수 있지만 요청 처리 성공 여부를 확정할 수 없습니다."
+      },
+      "right": {
+        "title": "status + body 함께 보기",
+        "body": "처리 결과와 반환 데이터를 같은 응답의 두 증거로 해석합니다."
+      }
+    },
+    "nodes": {
+      "learner": {
+        "label": "학습자",
+        "icon": "person",
+        "kind": "person",
+        "role": "요청을 구성하고 결과를 해석합니다.",
+        "boundary": "학습자"
+      },
+      "http-client": {
+        "label": "Postman / HTTP Client",
+        "icon": "client",
+        "kind": "tool",
+        "role": "method, URL, header, body를 실제 HTTP 요청으로 보냅니다.",
+        "boundary": "로컬 요청 도구",
+        "codePointIds": ["http-request", "json-body"]
+      },
+      "sample-api": {
+        "label": "JSONPlaceholder API",
+        "icon": "external",
+        "kind": "external",
+        "role": "선수지식 실습 요청을 처리하는 외부 예제 API입니다.",
+        "boundary": "외부 HTTP API",
+        "codePointIds": ["http-request"]
+      },
+      "git-cli": {
+        "label": "Git CLI",
+        "icon": "tool",
+        "kind": "tool",
+        "role": "branch, add, commit 명령을 실행합니다.",
+        "boundary": "로컬 개발 환경",
+        "codePointIds": ["git-flow"]
+      },
+      "local-repository": {
+        "label": "Local Git Repository",
+        "icon": "repository",
+        "kind": "repository",
+        "role": "선택한 변경을 commit 기록으로 보관합니다.",
+        "boundary": "Git 기록",
+        "codePointIds": ["git-flow"]
+      },
+      "members-table": {
+        "label": "members table",
+        "icon": "database",
+        "kind": "database",
+        "role": "table, row, column, PK를 구분하는 예제 표입니다.",
+        "boundary": "DB 기초 모델"
+      }
+    },
+    "scenarios": [
+      {
+        "id": "get-response",
+        "label": "GET 응답 읽기",
+        "flowId": "http-request-flow",
+        "tone": "signal",
+        "prompt": "조회 요청의 성공 여부를 body만 보지 않고 어떻게 판단해야 할까요?",
+        "prediction": {
+          "prompt": "GET 응답의 성공을 확인할 때 먼저 묶어 볼 두 증거는 무엇일까요?",
+          "options": [
+            {
+              "id": "body-only",
+              "label": "JSON body의 값만 본다"
+            },
+            {
+              "id": "status-and-body",
+              "label": "status code와 JSON body를 함께 본다"
+            }
+          ],
+          "answer": "status-and-body",
+          "explanation": "status code는 처리 결과를, body는 반환 데이터를 보여주므로 둘을 함께 읽어야 합니다."
+        },
+        "diagram": {
+          "caption": "요청은 method와 URL로 보내고, 결과는 status와 JSON body를 함께 읽습니다.",
+          "lanes": [
+            {
+              "id": "http-round-trip",
+              "label": "HTTP 왕복",
+              "description": "로컬 요청 도구와 외부 예제 API 사이의 조회 요청과 응답입니다.",
+              "steps": [
+                {
+                  "from": "learner",
+                  "to": "http-client",
+                  "verb": "구성",
+                  "payload": "GET https://jsonplaceholder.typicode.com/posts/1",
+                  "kind": "config",
+                  "concept": "method + URL",
+                  "check": "GET과 전체 URL이 일치하는지 확인합니다.",
+                  "codePointIds": ["http-request"]
+                },
+                {
+                  "from": "http-client",
+                  "to": "sample-api",
+                  "verb": "전송",
+                  "payload": "GET /posts/1",
+                  "kind": "request",
+                  "concept": "HTTP request",
+                  "check": "요청이 외부 API로 나가는지 확인합니다."
+                },
+                {
+                  "from": "sample-api",
+                  "to": "http-client",
+                  "verb": "응답",
+                  "payload": "200 OK + JSON body",
+                  "kind": "response",
+                  "concept": "status + body",
+                  "check": "상태 코드와 응답 JSON을 함께 읽습니다."
+                },
+                {
+                  "from": "http-client",
+                  "to": "learner",
+                  "verb": "확인",
+                  "payload": "조회 성공과 응답 데이터",
+                  "kind": "compare",
+                  "concept": "결과 해석",
+                  "check": "200의 의미와 body의 key/value를 설명합니다."
+                }
+              ]
+            }
+          ]
+        },
+        "route": [
+          "학생",
+          "Postman/HTTP Client",
+          "API Server",
+          "Postman/HTTP Client",
+          "학생"
+        ],
+        "snapshot": [
+          { "label": "Method", "value": "GET" },
+          { "label": "Status", "value": "200 OK", "tone": "recovered" },
+          { "label": "Body", "value": "JSON 응답" }
+        ],
+        "evidence": "starter/http/get-post.http의 method·URL과 응답 status code·body를 함께 확인합니다.",
+        "outcome": "상태 코드로 조회 성공을 판단하고 JSON body에서 결과 데이터를 읽습니다."
+      },
+      {
+        "id": "post-json",
+        "label": "POST body 바꾸기",
+        "flowId": "http-request-flow",
+        "tone": "recovered",
+        "prompt": "JSON value를 바꾸면 같은 POST 요청의 무엇이 달라질까요?",
+        "prediction": {
+          "prompt": "같은 JSON key에서 value만 바꾸고 POST를 보내면 무엇이 달라질까요?",
+          "options": [
+            {
+              "id": "field-name",
+              "label": "서버가 읽는 필드 이름이 달라진다"
+            },
+            {
+              "id": "field-content",
+              "label": "같은 필드에 전달되는 실제 내용이 달라진다"
+            }
+          ],
+          "answer": "field-content",
+          "explanation": "key는 필드 이름으로 유지되고 value가 요청에 담긴 실제 내용으로 전달됩니다."
+        },
+        "diagram": {
+          "caption": "JSON의 key는 요청 모양을 유지하고, 바꾼 value가 서버로 전달할 내용을 바꿉니다.",
+          "lanes": [
+            {
+              "id": "post-round-trip",
+              "label": "POST 요청과 응답",
+              "description": "JSON value를 바꾼 뒤 외부 예제 API의 생성 응답과 비교합니다.",
+              "steps": [
+                {
+                  "from": "learner",
+                  "to": "http-client",
+                  "verb": "수정",
+                  "payload": "JSON { title, body, userId }",
+                  "kind": "config",
+                  "concept": "JSON key/value",
+                  "check": "key가 아니라 value를 바꿨는지 확인합니다.",
+                  "codePointIds": ["json-body"]
+                },
+                {
+                  "from": "http-client",
+                  "to": "sample-api",
+                  "verb": "전송",
+                  "payload": "POST /posts + JSON body",
+                  "kind": "request",
+                  "concept": "Request body",
+                  "check": "Content-Type과 JSON 형식을 확인합니다."
+                },
+                {
+                  "from": "sample-api",
+                  "to": "http-client",
+                  "verb": "응답",
+                  "payload": "201 Created + JSON body",
+                  "kind": "response",
+                  "concept": "생성 응답",
+                  "check": "201 상태와 응답 body를 확인합니다."
+                },
+                {
+                  "from": "http-client",
+                  "to": "learner",
+                  "verb": "비교",
+                  "payload": "보낸 value ↔ 응답 JSON",
+                  "kind": "compare",
+                  "concept": "입력과 결과",
+                  "check": "바꾼 값이 응답에서 어떻게 보이는지 설명합니다."
+                }
+              ]
+            }
+          ]
+        },
+        "route": [
+          "학생",
+          "JSON Body",
+          "Postman/HTTP Client",
+          "API Server",
+          "Postman/HTTP Client"
+        ],
+        "snapshot": [
+          { "label": "Method", "value": "POST" },
+          { "label": "Request", "value": "JSON key/value" },
+          { "label": "Status", "value": "201 Created", "tone": "recovered" }
+        ],
+        "evidence": "starter/json/create-post-request.json의 value를 바꾼 뒤 요청과 생성 응답을 비교합니다.",
+        "outcome": "key는 요청 필드의 이름으로 유지되고 value가 서버에 전달할 실제 내용으로 바뀝니다."
+      },
+      {
+        "id": "invalid-request",
+        "label": "잘못된 요청 형식",
+        "flowId": "http-request-flow",
+        "tone": "warning",
+        "prompt": "400 Bad Request는 어떤 의미이며 실제 요청 전 무엇을 먼저 점검해야 할까요?",
+        "prediction": {
+          "prompt": "실패 요청 예제가 없는 현재 starter에서 400을 어떻게 다뤄야 할까요?",
+          "options": [
+            {
+              "id": "claim-endpoint",
+              "label": "현재 endpoint가 400을 준다고 단정한다"
+            },
+            {
+              "id": "check-then-reproduce",
+              "label": "method·URL·JSON을 점검하고 재현 요청의 status를 확인한다"
+            }
+          ],
+          "answer": "check-then-reproduce",
+          "explanation": "400의 일반 의미와 실제 endpoint의 관찰 결과를 구분해야 기술 사실을 과장하지 않습니다."
+        },
+        "diagram": {
+          "caption": "400은 요청 형식 문제를 뜻하지만, 이 starter에는 실패를 재현하는 요청이 없으므로 실제 결과와 구분해 읽습니다.",
+          "lanes": [
+            {
+              "id": "bad-request-concept",
+              "label": "400 의미 확인",
+              "description": "실행된 실패 흐름이 아니라 요청 형식 오류의 일반적인 해석 기준입니다.",
+              "steps": [
+                {
+                  "from": "learner",
+                  "to": "http-client",
+                  "verb": "점검",
+                  "payload": "method · URL · JSON body",
+                  "kind": "config",
+                  "concept": "요청 형식",
+                  "check": "세 항목을 먼저 서로 대조합니다."
+                },
+                {
+                  "from": "http-client",
+                  "to": "sample-api",
+                  "verb": "가정",
+                  "payload": "형식이 잘못된 HTTP request",
+                  "kind": "request",
+                  "concept": "개념 예시",
+                  "check": "starter의 실행 증거와 구분합니다."
+                },
+                {
+                  "from": "sample-api",
+                  "to": "http-client",
+                  "verb": "일반적 실패 의미",
+                  "payload": "400 Bad Request",
+                  "kind": "failure",
+                  "concept": "요청 형식 오류",
+                  "check": "endpoint별 실제 오류 응답은 별도로 확인해야 합니다."
+                },
+                {
+                  "from": "http-client",
+                  "to": "learner",
+                  "verb": "해석",
+                  "payload": "요청 형식을 고쳐 다시 전송",
+                  "kind": "response",
+                  "concept": "실패 대응",
+                  "check": "실행하지 않은 결과를 실제 증거로 단정하지 않습니다."
+                }
+              ]
+            }
+          ],
+          "notReached": [
+            {
+              "label": "실패 요청의 실행 증거",
+              "reason": "현재 starter에는 400을 재현하는 invalid request가 없습니다."
+            }
+          ]
+        },
+        "route": [
+          "학생",
+          "JSON Body",
+          "Postman/HTTP Client",
+          "API Server",
+          "JSON 응답"
+        ],
+        "snapshot": [
+          { "label": "Request", "value": "형식 오류", "tone": "blocked" },
+          { "label": "Status", "value": "400 Bad Request의 일반 의미", "tone": "warning" },
+          { "label": "확인", "value": "method · URL · body" }
+        ],
+        "evidence": "현재 starter에는 실패 요청이 없으므로 method, URL, JSON body 점검 기준과 400의 일반적인 의미를 구분해 읽습니다.",
+        "outcome": "실제 endpoint 응답으로 단정하지 않고 재현 요청이 있을 때 status와 body를 다시 확인합니다."
+      },
+      {
+        "id": "record-work",
+        "label": "작업 기록과 DB 용어",
+        "flowId": "git-db-flow",
+        "tone": "signal",
+        "prompt": "다음 실습 전에 작업 위치와 데이터 표 구조를 어떤 증거로 설명할 수 있을까요?",
+        "prediction": {
+          "prompt": "다음 실습 전에 작업과 데이터를 다시 찾게 해주는 증거 조합은 무엇일까요?",
+          "options": [
+            {
+              "id": "history-only",
+              "label": "터미널에 남은 화면만 기억한다"
+            },
+            {
+              "id": "commit-and-pk",
+              "label": "branch·commit 기록과 row의 PK를 사용한다"
+            }
+          ],
+          "answer": "commit-and-pk",
+          "explanation": "Git commit은 변경을 다시 찾고 PK는 테이블의 한 row를 다시 식별하게 합니다."
+        },
+        "diagram": {
+          "caption": "Git 작업 기록과 DB 표 용어는 서로 이어지는 시스템 호출이 아니라 다음 실습을 위한 두 개의 준비 과제입니다.",
+          "lanes": [
+            {
+              "id": "git-practice",
+              "label": "Git 작업 기록",
+              "description": "branch를 나누고 선택한 변경을 commit으로 남깁니다.",
+              "steps": [
+                {
+                  "from": "learner",
+                  "to": "git-cli",
+                  "verb": "분기",
+                  "payload": "git checkout -b feat/<your-name>",
+                  "kind": "config",
+                  "concept": "작업 branch",
+                  "check": "현재 branch를 확인합니다.",
+                  "codePointIds": ["git-flow"]
+                },
+                {
+                  "from": "git-cli",
+                  "to": "local-repository",
+                  "verb": "선택",
+                  "payload": "git add .",
+                  "kind": "event",
+                  "concept": "staging",
+                  "check": "기록할 변경이 선택됐는지 확인합니다."
+                },
+                {
+                  "from": "git-cli",
+                  "to": "local-repository",
+                  "verb": "기록",
+                  "payload": "git commit -m <message>",
+                  "kind": "persist",
+                  "concept": "commit",
+                  "check": "변경 이유가 commit으로 남았는지 확인합니다."
+                }
+              ]
+            },
+            {
+              "id": "db-vocabulary",
+              "label": "DB 표 용어",
+              "description": "members 표에서 구조와 한 건의 데이터를 구분합니다.",
+              "steps": [
+                {
+                  "from": "learner",
+                  "to": "members-table",
+                  "verb": "구분",
+                  "payload": "table · row · column",
+                  "kind": "compare",
+                  "concept": "표 구조와 데이터",
+                  "check": "전체 표, 한 줄, 각 항목을 짚어 설명합니다."
+                },
+                {
+                  "from": "learner",
+                  "to": "members-table",
+                  "verb": "식별",
+                  "payload": "id = PK",
+                  "kind": "compare",
+                  "concept": "Primary Key",
+                  "check": "각 row를 고유하게 찾는 값을 설명합니다."
+                }
+              ]
+            }
+          ]
+        },
+        "route": [
+          "학생",
+          "Git CLI",
+          "Git branch",
+          "Local work",
+          "Git commit",
+          "DB Table"
+        ],
+        "snapshot": [
+          { "label": "작업 위치", "value": "현재 branch" },
+          { "label": "변경 기록", "value": "add → commit" },
+          { "label": "DB 기준", "value": "table · row · column · PK" }
+        ],
+        "evidence": "starter/git/command-flow.txt와 starter/db/members-table-diagram.txt를 직접 따라갑니다.",
+        "outcome": "변경을 branch와 commit으로 설명하고 한 row를 PK로 다시 찾는 기준을 말할 수 있습니다."
+      }
+    ]
+  },
   "actors": [
     {
       "id": "student",
@@ -276,19 +727,19 @@ window.visualLabData = {
   "codePoints": [
     {
       "id": "http-request",
-      "title": "HTTP 요청은 method, path, body를 함께 봅니다",
+      "title": "HTTP 요청은 method, URL, headers, body를 함께 봅니다",
       "file": "starter/http/create-post.http",
       "language": "http",
-      "snippet": "POST /posts HTTP/1.1\nContent-Type: application/json\n\n{\n  \"title\": \"첫 글\",\n  \"content\": \"HTTP body 연습\",\n  \"author\": \"aandi\"\n}",
+      "snippet": "POST https://jsonplaceholder.typicode.com/posts\nContent-Type: application/json\nAccept: application/json\n\n{\n  \"title\": \"A&I Bootcamp\",\n  \"body\": \"Postman으로 POST 요청을 보내는 연습입니다.\",\n  \"userId\": 4\n}",
       "explanation": "서버 코드 전에 요청이 어떤 모양으로 이동하는지 먼저 확인합니다.",
-      "check": "method, path, header, body를 분리해서 읽을 수 있어야 합니다."
+      "check": "method, URL, headers, body를 분리해서 읽을 수 있어야 합니다."
     },
     {
       "id": "json-body",
       "title": "JSON은 key와 value를 짝으로 읽습니다",
       "file": "starter/json/create-post-request.json",
       "language": "json",
-      "snippet": "{\n  \"title\": \"수정한 제목\",\n  \"content\": \"값만 바꿔 다시 요청\",\n  \"author\": \"student\"\n}",
+      "snippet": "{\n  \"title\": \"A&I Bootcamp\",\n  \"body\": \"JSON body 값을 직접 수정해보세요.\",\n  \"userId\": 4\n}",
       "explanation": "이후 DTO 필드와 JSON key가 연결되므로 key 이름을 정확히 읽습니다.",
       "check": "문자열 quote, comma, key 이름을 틀리지 않고 수정합니다."
     },
@@ -297,9 +748,9 @@ window.visualLabData = {
       "title": "실습 브랜치로 이동한 뒤 변경을 기록합니다",
       "file": "starter/git/command-flow.txt",
       "language": "bash",
-      "snippet": "git branch --show-current\ngit checkout 00-implementation\ngit status --short\ngit add docs/checklist.md\ngit commit -m \"docs: Record practice check\"",
-      "explanation": "실습은 항상 현재 브랜치를 확인한 뒤 작은 변경 단위로 기록합니다.",
-      "check": "현재 브랜치와 변경 파일 목록을 말할 수 있어야 합니다."
+      "snippet": "1. git clone <repository-url>\n2. cd <repository-name>\n3. git checkout -b feat/<your-name>\n4. git status\n5. git add .\n6. git commit -m \"docs: practice git flow\"",
+      "explanation": "원격 레포를 받은 뒤 작업 branch를 만들고 변경을 commit까지 기록하는 순서를 확인합니다.",
+      "check": "clone, branch 생성, status, add, commit의 순서를 설명할 수 있어야 합니다."
     }
   ],
   "concepts": [
