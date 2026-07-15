@@ -12,7 +12,7 @@ window.visualLabData = {
   "defaultSequence": "00",
   "workbench": {
     "kind": "request",
-    "title": "요청·도구 준비 워크벤치",
+    "title": "요청과 작업 기준을 만드는 과정",
     "instruction": "시나리오를 바꾸며 요청 의도, 응답 증거, 작업 기록이 다음 실습의 어떤 기준이 되는지 확인하세요.",
     "visual": {
       "src": "../../assets/diagrams/00-request-tool-map.svg",
@@ -103,6 +103,12 @@ window.visualLabData = {
         "flowId": "http-request-flow",
         "tone": "signal",
         "prompt": "조회 요청의 성공 여부를 body만 보지 않고 어떻게 판단해야 할까요?",
+        "observationTitle": "200 status와 JSON body가 함께 조회 성공을 증명하는가?",
+        "reflection": {
+          "prompt": "조회 성공을 판단할 때 status와 body를 어떤 인과 규칙으로 묶을 수 있을까요?",
+          "hint": "status는 처리 결과를, body는 반환 데이터를 증명한다는 두 역할을 분리해 보세요."
+        },
+        "theoryRef": "../../../theory.md#seq-00",
         "prediction": {
           "prompt": "GET 응답의 성공을 확인할 때 먼저 묶어 볼 두 증거는 무엇일까요?",
           "options": [
@@ -132,9 +138,18 @@ window.visualLabData = {
                   "verb": "구성",
                   "payload": "GET https://jsonplaceholder.typicode.com/posts/1",
                   "kind": "config",
+                  "effect": {
+                    "kind": "preserve",
+                    "subject": "GET https://jsonplaceholder.typicode.com/posts/1",
+                    "before": "학습자: 조회 method와 URL을 아직 선택하지 않음",
+                    "after": "HTTP Client: GET URL과 Accept header가 실행 가능하게 설정됨"
+                  },
+                  "evidenceScope": "manual",
                   "concept": "method + URL",
                   "check": "GET과 전체 URL이 일치하는지 확인합니다.",
-                  "codePointIds": ["http-request"]
+                  "codePointIds": [
+                    "http-request"
+                  ]
                 },
                 {
                   "from": "http-client",
@@ -142,6 +157,13 @@ window.visualLabData = {
                   "verb": "전송",
                   "payload": "GET /posts/1",
                   "kind": "request",
+                  "effect": {
+                    "kind": "transfer",
+                    "subject": "GET /posts/1",
+                    "before": "Postman / HTTP Client: GET /posts/1 전송 준비",
+                    "after": "JSONPlaceholder API: GET /posts/1 수신"
+                  },
+                  "evidenceScope": "manual",
                   "concept": "HTTP request",
                   "check": "요청이 외부 API로 나가는지 확인합니다."
                 },
@@ -151,6 +173,13 @@ window.visualLabData = {
                   "verb": "응답",
                   "payload": "200 OK + JSON body",
                   "kind": "response",
+                  "effect": {
+                    "kind": "return",
+                    "subject": "200 OK + JSON body",
+                    "before": "Postman / HTTP Client: HTTP status와 body 미확정",
+                    "after": "Postman / HTTP Client: 200 OK + JSON body"
+                  },
+                  "evidenceScope": "runtime",
                   "concept": "status + body",
                   "check": "상태 코드와 응답 JSON을 함께 읽습니다."
                 },
@@ -160,6 +189,13 @@ window.visualLabData = {
                   "verb": "확인",
                   "payload": "조회 성공과 응답 데이터",
                   "kind": "compare",
+                  "effect": {
+                    "kind": "verify",
+                    "subject": "조회 성공과 응답 데이터",
+                    "before": "학습자: 200 status와 JSON body를 따로 보고 있음",
+                    "after": "학습자: 200은 처리 결과, JSON은 조회 데이터로 함께 해석"
+                  },
+                  "evidenceScope": "manual",
                   "concept": "결과 해석",
                   "check": "200의 의미와 body의 key/value를 설명합니다."
                 }
@@ -188,6 +224,12 @@ window.visualLabData = {
         "flowId": "http-request-flow",
         "tone": "recovered",
         "prompt": "JSON value를 바꾸면 같은 POST 요청의 무엇이 달라질까요?",
+        "observationTitle": "바꾼 JSON value가 생성 요청과 응답에 어떻게 이어지는가?",
+        "reflection": {
+          "prompt": "JSON value 변경이 POST 결과에 미치는 규칙을 어떻게 설명할 수 있을까요?",
+          "hint": "key가 요청 모양을 유지하고 value가 실제 전송 내용을 바꾼다는 점을 연결해 보세요."
+        },
+        "theoryRef": "../../../theory.md#seq-00",
         "prediction": {
           "prompt": "같은 JSON key에서 value만 바꾸고 POST를 보내면 무엇이 달라질까요?",
           "options": [
@@ -217,9 +259,18 @@ window.visualLabData = {
                   "verb": "수정",
                   "payload": "JSON { title, body, userId }",
                   "kind": "config",
+                  "effect": {
+                    "kind": "preserve",
+                    "subject": "JSON { title, body, userId }",
+                    "before": "HTTP Client body: 생성 요청 값 미설정",
+                    "after": "HTTP Client body: title·body·userId value가 JSON으로 구성됨"
+                  },
+                  "evidenceScope": "manual",
                   "concept": "JSON key/value",
                   "check": "key가 아니라 value를 바꿨는지 확인합니다.",
-                  "codePointIds": ["json-body"]
+                  "codePointIds": [
+                    "json-body"
+                  ]
                 },
                 {
                   "from": "http-client",
@@ -227,6 +278,13 @@ window.visualLabData = {
                   "verb": "전송",
                   "payload": "POST /posts + JSON body",
                   "kind": "request",
+                  "effect": {
+                    "kind": "transfer",
+                    "subject": "POST /posts + JSON body",
+                    "before": "Postman / HTTP Client: POST /posts + JSON body 전송 준비",
+                    "after": "JSONPlaceholder API: POST /posts + JSON body 수신"
+                  },
+                  "evidenceScope": "manual",
                   "concept": "Request body",
                   "check": "Content-Type과 JSON 형식을 확인합니다."
                 },
@@ -236,6 +294,13 @@ window.visualLabData = {
                   "verb": "응답",
                   "payload": "201 Created + JSON body",
                   "kind": "response",
+                  "effect": {
+                    "kind": "return",
+                    "subject": "201 Created + JSON body",
+                    "before": "Postman / HTTP Client: HTTP status와 body 미확정",
+                    "after": "Postman / HTTP Client: 201 Created + JSON body"
+                  },
+                  "evidenceScope": "runtime",
                   "concept": "생성 응답",
                   "check": "201 상태와 응답 body를 확인합니다."
                 },
@@ -245,6 +310,13 @@ window.visualLabData = {
                   "verb": "비교",
                   "payload": "보낸 value ↔ 응답 JSON",
                   "kind": "compare",
+                  "effect": {
+                    "kind": "verify",
+                    "subject": "보낸 value ↔ 응답 JSON",
+                    "before": "학습자: 요청 value와 응답 field의 대응을 확인하지 않음",
+                    "after": "학습자: title·body·userId가 응답에 반영됐는지 비교"
+                  },
+                  "evidenceScope": "manual",
                   "concept": "입력과 결과",
                   "check": "바꾼 값이 응답에서 어떻게 보이는지 설명합니다."
                 }
@@ -273,6 +345,12 @@ window.visualLabData = {
         "flowId": "http-request-flow",
         "tone": "warning",
         "prompt": "400 Bad Request는 어떤 의미이며 실제 요청 전 무엇을 먼저 점검해야 할까요?",
+        "observationTitle": "요청 전 점검에서 어떤 형식 오류가 400 후보가 되는가?",
+        "reflection": {
+          "prompt": "잘못된 요청을 고칠 때 method, URL, JSON을 어떤 순서로 좁힐 수 있을까요?",
+          "hint": "아직 실제 400을 실행한 증거가 아니라, 요청 형식에서 확인할 원인 후보라는 범위를 지키세요."
+        },
+        "theoryRef": "../../../theory.md#seq-00",
         "prediction": {
           "prompt": "실패 요청 예제가 없는 현재 starter에서 400을 어떻게 다뤄야 할까요?",
           "options": [
@@ -302,6 +380,13 @@ window.visualLabData = {
                   "verb": "점검",
                   "payload": "method · URL · JSON body",
                   "kind": "config",
+                  "effect": {
+                    "kind": "preserve",
+                    "subject": "method · URL · JSON body",
+                    "before": "실패 요청 후보: method·URL·JSON 형식 미점검",
+                    "after": "HTTP Client: 세 항목을 전송 전 체크할 수 있게 정리됨"
+                  },
+                  "evidenceScope": "concept",
                   "concept": "요청 형식",
                   "check": "세 항목을 먼저 서로 대조합니다."
                 },
@@ -311,6 +396,13 @@ window.visualLabData = {
                   "verb": "가정",
                   "payload": "형식이 잘못된 HTTP request",
                   "kind": "request",
+                  "effect": {
+                    "kind": "transfer",
+                    "subject": "형식이 잘못된 HTTP request",
+                    "before": "Postman / HTTP Client: 형식이 잘못된 HTTP request 전송 준비",
+                    "after": "JSONPlaceholder API: 형식이 잘못된 HTTP request 수신"
+                  },
+                  "evidenceScope": "concept",
                   "concept": "개념 예시",
                   "check": "starter의 실행 증거와 구분합니다."
                 },
@@ -320,6 +412,13 @@ window.visualLabData = {
                   "verb": "일반적 실패 의미",
                   "payload": "400 Bad Request",
                   "kind": "failure",
+                  "effect": {
+                    "kind": "gate",
+                    "subject": "400 Bad Request",
+                    "before": "Sample API: 형식 오류 요청을 처리 대상으로 평가",
+                    "after": "Sample API: 400으로 거절하고 생성·수정 상태를 바꾸지 않음"
+                  },
+                  "evidenceScope": "concept",
                   "concept": "요청 형식 오류",
                   "check": "endpoint별 실제 오류 응답은 별도로 확인해야 합니다."
                 },
@@ -329,6 +428,13 @@ window.visualLabData = {
                   "verb": "해석",
                   "payload": "요청 형식을 고쳐 다시 전송",
                   "kind": "response",
+                  "effect": {
+                    "kind": "return",
+                    "subject": "요청 형식을 고쳐 다시 전송",
+                    "before": "학습자: 400 원인이 될 method·URL·body 형식을 유지",
+                    "after": "학습자: 잘못된 형식을 수정한 재전송 조건을 마련"
+                  },
+                  "evidenceScope": "concept",
                   "concept": "실패 대응",
                   "check": "실행하지 않은 결과를 실제 증거로 단정하지 않습니다."
                 }
@@ -363,6 +469,12 @@ window.visualLabData = {
         "flowId": "git-db-flow",
         "tone": "signal",
         "prompt": "다음 실습 전에 작업 위치와 데이터 표 구조를 어떤 증거로 설명할 수 있을까요?",
+        "observationTitle": "commit 기록과 table 구조가 다음 작업의 시작 상태를 설명하는가?",
+        "reflection": {
+          "prompt": "Git 기록과 DB 표 용어가 재현 가능한 작업 상태를 만드는 규칙은 무엇일까요?",
+          "hint": "commit은 선택한 변경을, PK는 한 row를 다시 찾는 기준을 보존합니다."
+        },
+        "theoryRef": "../../../theory.md#seq-00",
         "prediction": {
           "prompt": "다음 실습 전에 작업과 데이터를 다시 찾게 해주는 증거 조합은 무엇일까요?",
           "options": [
@@ -392,9 +504,18 @@ window.visualLabData = {
                   "verb": "분기",
                   "payload": "git checkout -b feat/<your-name>",
                   "kind": "config",
+                  "effect": {
+                    "kind": "preserve",
+                    "subject": "git checkout -b feat/<your-name>",
+                    "before": "Local Git Repository: 현재 branch에서 작업 중",
+                    "after": "Local Git Repository: feat/<your-name> branch가 생성되고 HEAD가 이동"
+                  },
+                  "evidenceScope": "manual",
                   "concept": "작업 branch",
                   "check": "현재 branch를 확인합니다.",
-                  "codePointIds": ["git-flow"]
+                  "codePointIds": [
+                    "git-flow"
+                  ]
                 },
                 {
                   "from": "git-cli",
@@ -402,6 +523,13 @@ window.visualLabData = {
                   "verb": "선택",
                   "payload": "git add .",
                   "kind": "event",
+                  "effect": {
+                    "kind": "persist",
+                    "subject": "git add .",
+                    "before": "Git index: working tree 변경이 선택되지 않음",
+                    "after": "Git index: working tree 변경이 staged 상태로 선택됨"
+                  },
+                  "evidenceScope": "manual",
                   "concept": "staging",
                   "check": "기록할 변경이 선택됐는지 확인합니다."
                 },
@@ -411,6 +539,13 @@ window.visualLabData = {
                   "verb": "기록",
                   "payload": "git commit -m <message>",
                   "kind": "persist",
+                  "effect": {
+                    "kind": "persist",
+                    "subject": "git commit -m <message>",
+                    "before": "현재 branch: staged changes가 index에만 존재",
+                    "after": "현재 branch: staged changes를 담은 새 commit을 가리킴"
+                  },
+                  "evidenceScope": "manual",
                   "concept": "commit",
                   "check": "변경 이유가 commit으로 남았는지 확인합니다."
                 }
@@ -427,6 +562,13 @@ window.visualLabData = {
                   "verb": "구분",
                   "payload": "table · row · column",
                   "kind": "compare",
+                  "effect": {
+                    "kind": "verify",
+                    "subject": "table · row · column",
+                    "before": "members 표: 구조 용어가 구분되지 않음",
+                    "after": "members 표: table 전체·한 row·각 column의 범위가 구분됨"
+                  },
+                  "evidenceScope": "manual",
                   "concept": "표 구조와 데이터",
                   "check": "전체 표, 한 줄, 각 항목을 짚어 설명합니다."
                 },
@@ -436,6 +578,13 @@ window.visualLabData = {
                   "verb": "식별",
                   "payload": "id = PK",
                   "kind": "compare",
+                  "effect": {
+                    "kind": "verify",
+                    "subject": "id = PK",
+                    "before": "members row: 다시 찾을 고유 기준이 정해지지 않음",
+                    "after": "members row: id를 PK로 사용해 한 row를 식별"
+                  },
+                  "evidenceScope": "manual",
                   "concept": "Primary Key",
                   "check": "각 row를 고유하게 찾는 값을 설명합니다."
                 }
@@ -573,7 +722,7 @@ window.visualLabData = {
           "message": "결과와 실패 지점을 확인합니다.",
           "messageKind": "response",
           "problem": "구현 후 실제로 어느 지점이 통과했는지 확인해야 합니다.",
-          "concept": "Verification",
+          "concept": "HTTP 실행 결과 확인",
           "action": "문서의 확인 명령이나 화면에서 결과를 검증합니다.",
           "check": "성공 흐름과 실패 흐름을 말로 설명합니다.",
           "note": "Visual Lab은 코드를 대신 완성하지 않고 확인 지점을 고정합니다.",
@@ -663,7 +812,7 @@ window.visualLabData = {
           "message": "결과와 실패 지점을 확인합니다.",
           "messageKind": "response",
           "problem": "구현 후 실제로 어느 지점이 통과했는지 확인해야 합니다.",
-          "concept": "Verification",
+          "concept": "Git 기록 확인",
           "action": "문서의 확인 명령이나 화면에서 결과를 검증합니다.",
           "check": "성공 흐름과 실패 흐름을 말로 설명합니다.",
           "note": "Visual Lab은 코드를 대신 완성하지 않고 확인 지점을 고정합니다.",
@@ -716,7 +865,7 @@ window.visualLabData = {
       "id": "http-request-flow-check-4",
       "label": "확인 지점",
       "problem": "구현 후 실제로 어느 지점이 통과했는지 확인해야 합니다.",
-      "concept": "Verification",
+      "concept": "도구 실행 확인",
       "action": "문서의 확인 명령이나 화면에서 결과를 검증합니다.",
       "check": "성공 흐름과 실패 흐름을 말로 설명합니다.",
       "codePointIds": [
@@ -730,7 +879,7 @@ window.visualLabData = {
       "title": "HTTP 요청은 method, URL, headers, body를 함께 봅니다",
       "file": "starter/http/create-post.http",
       "language": "http",
-      "snippet": "POST https://jsonplaceholder.typicode.com/posts\nContent-Type: application/json\nAccept: application/json\n\n{\n  \"title\": \"A&I Bootcamp\",\n  \"body\": \"Postman으로 POST 요청을 보내는 연습입니다.\",\n  \"userId\": 4\n}",
+      "snippet": "# method·URL과 body를 묶어 실제 생성 요청을 만듭니다.\nPOST https://jsonplaceholder.typicode.com/posts\nContent-Type: application/json\nAccept: application/json\n\n{\n  \"title\": \"A&I Bootcamp\",\n  \"body\": \"Postman으로 POST 요청을 보내는 연습입니다.\",\n  \"userId\": 4\n}",
       "explanation": "서버 코드 전에 요청이 어떤 모양으로 이동하는지 먼저 확인합니다.",
       "check": "method, URL, headers, body를 분리해서 읽을 수 있어야 합니다."
     },
@@ -738,8 +887,8 @@ window.visualLabData = {
       "id": "json-body",
       "title": "JSON은 key와 value를 짝으로 읽습니다",
       "file": "starter/json/create-post-request.json",
-      "language": "json",
-      "snippet": "{\n  \"title\": \"A&I Bootcamp\",\n  \"body\": \"JSON body 값을 직접 수정해보세요.\",\n  \"userId\": 4\n}",
+      "language": "jsonc",
+      "snippet": "// key는 유지하고 value를 바꿔 전송 내용을 정합니다.\n{\n  \"title\": \"A&I Bootcamp\",\n  \"body\": \"JSON body 값을 직접 수정해보세요.\",\n  \"userId\": 4\n}",
       "explanation": "이후 DTO 필드와 JSON key가 연결되므로 key 이름을 정확히 읽습니다.",
       "check": "문자열 quote, comma, key 이름을 틀리지 않고 수정합니다."
     },
@@ -748,7 +897,7 @@ window.visualLabData = {
       "title": "실습 브랜치로 이동한 뒤 변경을 기록합니다",
       "file": "starter/git/command-flow.txt",
       "language": "bash",
-      "snippet": "1. git clone <repository-url>\n2. cd <repository-name>\n3. git checkout -b feat/<your-name>\n4. git status\n5. git add .\n6. git commit -m \"docs: practice git flow\"",
+      "snippet": "# working tree 변경을 새 branch의 commit으로 기록합니다.\ngit clone <repository-url>\ncd <repository-name>\ngit checkout -b feat/<your-name>\ngit status\ngit add .\ngit commit -m \"docs: practice git flow\"",
       "explanation": "원격 레포를 받은 뒤 작업 branch를 만들고 변경을 commit까지 기록하는 순서를 확인합니다.",
       "check": "clone, branch 생성, status, add, commit의 순서를 설명할 수 있어야 합니다."
     }
