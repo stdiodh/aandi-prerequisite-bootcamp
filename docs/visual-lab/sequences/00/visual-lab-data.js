@@ -54,6 +54,7 @@ window.visualLabData = {
         "icon": "person",
         "kind": "person",
         "role": "요청을 구성하고 결과를 해석합니다.",
+        "systemLayer": "outside",
         "boundary": "학습자"
       },
       "http-client": {
@@ -61,6 +62,7 @@ window.visualLabData = {
         "icon": "client",
         "kind": "tool",
         "role": "method, URL, header, body를 실제 HTTP 요청으로 보냅니다.",
+        "systemLayer": "outside",
         "boundary": "로컬 요청 도구",
         "codePointIds": ["http-request", "json-body"]
       },
@@ -69,6 +71,7 @@ window.visualLabData = {
         "icon": "external",
         "kind": "external",
         "role": "선수지식 실습 요청을 처리하는 외부 예제 API입니다.",
+        "systemLayer": "integration",
         "boundary": "외부 HTTP API",
         "codePointIds": ["http-request"]
       },
@@ -77,6 +80,7 @@ window.visualLabData = {
         "icon": "tool",
         "kind": "tool",
         "role": "branch, add, commit 명령을 실행합니다.",
+        "systemLayer": "outside",
         "boundary": "로컬 개발 환경",
         "codePointIds": ["git-flow"]
       },
@@ -85,6 +89,7 @@ window.visualLabData = {
         "icon": "repository",
         "kind": "repository",
         "role": "선택한 변경을 commit 기록으로 보관합니다.",
+        "systemLayer": "outside",
         "boundary": "Git 기록",
         "codePointIds": ["git-flow"]
       },
@@ -93,6 +98,7 @@ window.visualLabData = {
         "icon": "database",
         "kind": "database",
         "role": "table, row, column, PK를 구분하는 예제 표입니다.",
+        "systemLayer": "resource",
         "boundary": "DB 기초 모델"
       }
     },

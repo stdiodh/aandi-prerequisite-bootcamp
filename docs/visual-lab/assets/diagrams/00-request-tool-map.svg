@@ -1,30 +1,63 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" role="img" aria-labelledby="seq00-title seq00-desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 340" role="img" aria-labelledby="seq00-title seq00-desc">
   <title id="seq00-title">00 선수지식 증거 지도</title>
-  <desc id="seq00-desc">HTTP 요청과 응답 증거, Git 작업 기록, DB row 식별 기준을 두 줄로 구분한 지도</desc>
+  <desc id="seq00-desc">시스템 밖의 HTTP 도구에서 요청과 응답을 확인하고, Git 작업 기록과 상태·데이터 레이어의 row 식별 기준을 구분하는 지도</desc>
   <metadata>Source: A&amp;I Backend Visual Lab; License: project-local educational asset; redistribution follows repository terms.</metadata>
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#2955E4"/></marker>
-    <marker id="arrow-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#176F72"/></marker>
-    <style>.frame{fill:#fff;stroke:#6f82b8;stroke-width:2}.node{fill:#fff;stroke:#6f82b8;stroke-width:2}.soft{fill:#ecfbfa;stroke:#176f72;stroke-width:2}.warning{fill:#eef4ff;stroke:#2955e4;stroke-width:2}.boundary{fill:#eaf0fb;stroke:#6f82b8;stroke-width:2;stroke-dasharray:7 5}.boundary-strong{fill:#ecfbfa;stroke:#176f72;stroke-width:3}.arrow{fill:none;stroke:#2955e4;stroke-width:3;marker-end:url(#arrow)}.return{fill:none;stroke:#176f72;stroke-width:3;marker-end:url(#arrow-teal)}.stop{fill:none;stroke:#2955e4;stroke-width:2;stroke-dasharray:6 4}.divider{stroke:#c9d6f3;stroke-width:2}.title{fill:#111b3f;font:700 26px system-ui,-apple-system,sans-serif;text-anchor:middle}.copy{fill:#4b587c;font:600 24px system-ui,-apple-system,sans-serif;text-anchor:middle}.label{fill:#0c2691;font:800 24px system-ui,-apple-system,sans-serif}.teal{fill:#176f72}</style>
+    <style>
+      text{font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;fill:#111B3F}
+      .frame{fill:#FFFFFF;stroke:#6F82B8;stroke-width:2}
+      .node{stroke-width:2.5}
+      .layer-outside{fill:#F1F5F9;stroke:#5B677A}
+      .layer-interface{fill:#E6F4F7;stroke:#0E7490}
+      .layer-application{fill:#F2EDFF;stroke:#6D43A8}
+      .layer-resource{fill:#EAF5EE;stroke:#2C7352}
+      .layer-integration{fill:#FFF4D6;stroke:#926000}
+      .layer-runtime{fill:#EEF2F7;stroke:#52627A}
+      [data-layer="outside"] .layer{fill:#5B677A}
+      [data-layer="resource"] .layer{fill:#2C7352}
+      .flow{fill:none;stroke:#2955E4;stroke-width:3;marker-end:url(#arrow)}
+      .divider{stroke:#C9D6F3;stroke-width:2}
+      .group{font-size:24px;font-weight:850;fill:#0C2691}
+      .layer{font-size:24px;font-weight:800;fill:#4B587C}
+      .name{font-size:25px;font-weight:800;text-anchor:middle}
+      .body{font-size:24px;font-weight:650;fill:#4B587C;text-anchor:middle}
+    </style>
   </defs>
-  <rect width="720" height="300" fill="#F8F9FB"/>
+  <rect width="720" height="340" fill="#F8F9FB"/>
+  <rect x="20" y="20" width="680" height="300" rx="18" class="frame"/>
 
-  <rect x="20" y="20" width="680" height="260" rx="18" class="frame"/>
-  <text x="42" y="56" class="label">HTTP 증거</text>
-  <rect x="42" y="76" width="170" height="72" rx="10" class="node"/>
-  <text x="127" y="106" class="title">요청 구성</text>
-  <text x="127" y="134" class="copy">method · URL</text>
-  <path d="M212 112h63" class="arrow"/>
-  <rect x="275" y="76" width="170" height="72" rx="10" class="node"/>
-  <text x="360" y="120" class="title">HTTP Client</text>
-  <path d="M445 112h55" class="arrow"/>
-  <rect x="500" y="76" width="170" height="72" rx="10" class="soft"/>
-  <text x="585" y="106" class="title">응답 판단</text>
-  <text x="585" y="134" class="copy">status + body</text>
-  <line x1="42" y1="168" x2="670" y2="168" class="divider"/>
-  <text x="42" y="202" class="label">작업 · 데이터 증거</text>
-  <rect x="42" y="218" width="280" height="42" rx="9" class="node"/>
-  <text x="182" y="247" class="title">branch → commit</text>
-  <rect x="390" y="218" width="280" height="42" rx="9" class="soft"/>
-  <text x="530" y="247" class="title">row → PK</text>
+  <text x="42" y="57" class="group">HTTP 증거 · 시스템 밖에서 관찰</text>
+  <g data-layer="outside">
+    <rect x="42" y="76" width="170" height="88" rx="10" class="node layer-outside"/>
+    <text x="127" y="101" class="layer" text-anchor="middle">시스템 밖</text>
+    <text x="127" y="128" class="name">요청 구성</text>
+    <text x="127" y="153" class="body">method · URL</text>
+  </g>
+  <path d="M212 120h63" class="flow"/>
+  <g data-layer="outside">
+    <rect x="275" y="76" width="170" height="88" rx="10" class="node layer-outside"/>
+    <text x="360" y="101" class="layer" text-anchor="middle">시스템 밖</text>
+    <text x="360" y="139" class="name">HTTP Client</text>
+  </g>
+  <path d="M445 120h55" class="flow"/>
+  <g data-layer="outside">
+    <rect x="500" y="76" width="170" height="88" rx="10" class="node layer-outside"/>
+    <text x="585" y="101" class="layer" text-anchor="middle">시스템 밖</text>
+    <text x="585" y="128" class="name">응답 판단</text>
+    <text x="585" y="153" class="body">status + body</text>
+  </g>
+
+  <line x1="42" y1="185" x2="670" y2="185" class="divider"/>
+  <text x="42" y="216" class="group">작업 기록과 데이터 식별 증거</text>
+  <g data-layer="outside">
+    <rect x="42" y="232" width="280" height="68" rx="9" class="node layer-outside"/>
+    <text x="182" y="254" class="layer" text-anchor="middle">시스템 밖</text>
+    <text x="182" y="285" class="name">branch → commit</text>
+  </g>
+  <g data-layer="resource">
+    <rect x="390" y="232" width="280" height="68" rx="9" class="node layer-resource"/>
+    <text x="530" y="254" class="layer" text-anchor="middle">상태·데이터</text>
+    <text x="530" y="285" class="name">row → PK</text>
+  </g>
 </svg>
