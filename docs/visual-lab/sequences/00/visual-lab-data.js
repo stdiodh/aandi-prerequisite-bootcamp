@@ -108,15 +108,15 @@ window.visualLabData = {
         "label": "GET 응답 읽기",
         "flowId": "http-request-flow",
         "tone": "signal",
-        "prompt": "조회 요청의 성공 여부를 body만 보지 않고 어떻게 판단해야 할까요?",
-        "observationTitle": "200 status와 JSON body가 함께 조회 성공을 증명하는가?",
+        "prompt": "GET /posts/1 응답에 status와 JSON body가 함께 도착했습니다.",
+        "observationTitle": "200 status와 JSON 응답 읽기",
         "reflection": {
-          "prompt": "조회 성공을 판단할 때 status와 body를 어떤 인과 규칙으로 묶을 수 있을까요?",
+          "prompt": "실패한 GET 응답을 받았다면 무엇부터 확인할지 자기 말로 적어 보세요.",
           "hint": "status는 처리 결과를, body는 반환 데이터를 증명한다는 두 역할을 분리해 보세요."
         },
         "theoryRef": "../../../theory.md#seq-00",
         "prediction": {
-          "prompt": "GET 응답의 성공을 확인할 때 먼저 묶어 볼 두 증거는 무엇일까요?",
+          "prompt": "조회 성공을 판단할 때 함께 볼 두 값은 무엇일까요?",
           "options": [
             {
               "id": "body-only",
@@ -128,15 +128,15 @@ window.visualLabData = {
             }
           ],
           "answer": "status-and-body",
-          "explanation": "status code는 처리 결과를, body는 반환 데이터를 보여주므로 둘을 함께 읽어야 합니다."
+          "explanation": "body는 값만 보여 주므로 HTTP 처리 결과를 판단하려면 status가 필요합니다."
         },
         "diagram": {
-          "caption": "요청은 method와 URL로 보내고, 결과는 status와 JSON body를 함께 읽습니다.",
+          "caption": "HTTP Client가 GET /posts/1을 보내고 Sample API가 200과 JSON을 돌려줍니다.",
           "lanes": [
             {
               "id": "http-round-trip",
               "label": "HTTP 왕복",
-              "description": "로컬 요청 도구와 외부 예제 API 사이의 조회 요청과 응답입니다.",
+              "description": "요청 도구가 method·URL을 보내고 status·body를 표시합니다.",
               "steps": [
                 {
                   "from": "learner",
@@ -221,23 +221,23 @@ window.visualLabData = {
           { "label": "Status", "value": "200 OK", "tone": "recovered" },
           { "label": "Body", "value": "JSON 응답" }
         ],
-        "evidence": "starter/http/get-post.http의 method·URL과 응답 status code·body를 함께 확인합니다.",
-        "outcome": "상태 코드로 조회 성공을 판단하고 JSON body에서 결과 데이터를 읽습니다."
+        "evidence": "starter/http/get-post.http의 method·URL과 실행 화면의 status·body를 대조합니다.",
+        "outcome": "GET 응답은 status로 처리 결과를 판정한 뒤 body에서 반환 값을 읽습니다."
       },
       {
         "id": "post-json",
         "label": "POST body 바꾸기",
         "flowId": "http-request-flow",
         "tone": "recovered",
-        "prompt": "JSON value를 바꾸면 같은 POST 요청의 무엇이 달라질까요?",
-        "observationTitle": "바꾼 JSON value가 생성 요청과 응답에 어떻게 이어지는가?",
+        "prompt": "같은 key를 둔 채 JSON value만 바꿔 POST를 보냅니다.",
+        "observationTitle": "바꾼 value의 전달 경로",
         "reflection": {
-          "prompt": "JSON value 변경이 POST 결과에 미치는 규칙을 어떻게 설명할 수 있을까요?",
+          "prompt": "title과 userId 중 하나만 바꾸면 요청이 어떻게 달라지는지 적어 보세요.",
           "hint": "key가 요청 모양을 유지하고 value가 실제 전송 내용을 바꾼다는 점을 연결해 보세요."
         },
         "theoryRef": "../../../theory.md#seq-00",
         "prediction": {
-          "prompt": "같은 JSON key에서 value만 바꾸고 POST를 보내면 무엇이 달라질까요?",
+          "prompt": "같은 key에서 value만 바꾸면 요청의 어느 부분이 달라질까요?",
           "options": [
             {
               "id": "field-name",
@@ -249,15 +249,15 @@ window.visualLabData = {
             }
           ],
           "answer": "field-content",
-          "explanation": "key는 필드 이름으로 유지되고 value가 요청에 담긴 실제 내용으로 전달됩니다."
+          "explanation": "서버는 key로 필드를 구분하고 각 value를 그 필드의 데이터로 읽습니다."
         },
         "diagram": {
-          "caption": "JSON의 key는 요청 모양을 유지하고, 바꾼 value가 서버로 전달할 내용을 바꿉니다.",
+          "caption": "요청 도구가 수정한 JSON을 Sample API에 보내고 생성 응답을 돌려받습니다.",
           "lanes": [
             {
               "id": "post-round-trip",
               "label": "POST 요청과 응답",
-              "description": "JSON value를 바꾼 뒤 외부 예제 API의 생성 응답과 비교합니다.",
+              "description": "body 편집부터 외부 예제 API 응답 비교까지 맡습니다.",
               "steps": [
                 {
                   "from": "learner",
@@ -342,23 +342,23 @@ window.visualLabData = {
           { "label": "Request", "value": "JSON key/value" },
           { "label": "Status", "value": "201 Created", "tone": "recovered" }
         ],
-        "evidence": "starter/json/create-post-request.json의 value를 바꾼 뒤 요청과 생성 응답을 비교합니다.",
-        "outcome": "key는 요청 필드의 이름으로 유지되고 value가 서버에 전달할 실제 내용으로 바뀝니다."
+        "evidence": "starter/json/create-post-request.json과 예제 API 응답을 대조합니다. 실제 DB 저장 증거는 아닙니다.",
+        "outcome": "같은 key에서 value를 바꾸면 요청 구조는 유지되고 전달 데이터가 달라집니다."
       },
       {
         "id": "invalid-request",
         "label": "잘못된 요청 형식",
         "flowId": "http-request-flow",
         "tone": "warning",
-        "prompt": "400 Bad Request는 어떤 의미이며 실제 요청 전 무엇을 먼저 점검해야 할까요?",
-        "observationTitle": "요청 전 점검에서 어떤 형식 오류가 400 후보가 되는가?",
+        "prompt": "현재 starter에는 400을 재현하는 실패 요청이 없습니다.",
+        "observationTitle": "400을 단정하기 전 확인 범위",
         "reflection": {
-          "prompt": "잘못된 요청을 고칠 때 method, URL, JSON을 어떤 순서로 좁힐 수 있을까요?",
+          "prompt": "400을 재현하려면 어떤 입력을 바꾸고 무엇을 기록할지 적어 보세요.",
           "hint": "아직 실제 400을 실행한 증거가 아니라, 요청 형식에서 확인할 원인 후보라는 범위를 지키세요."
         },
         "theoryRef": "../../../theory.md#seq-00",
         "prediction": {
-          "prompt": "실패 요청 예제가 없는 현재 starter에서 400을 어떻게 다뤄야 할까요?",
+          "prompt": "실행 증거가 없는 400을 어느 수준까지 설명해야 할까요?",
           "options": [
             {
               "id": "claim-endpoint",
@@ -370,15 +370,15 @@ window.visualLabData = {
             }
           ],
           "answer": "check-then-reproduce",
-          "explanation": "400의 일반 의미와 실제 endpoint의 관찰 결과를 구분해야 기술 사실을 과장하지 않습니다."
+          "explanation": "재현 결과가 없으므로 일반 의미와 입력 점검 후보까지만 말할 수 있습니다."
         },
         "diagram": {
-          "caption": "400은 요청 형식 문제를 뜻하지만, 이 starter에는 실패를 재현하는 요청이 없으므로 실제 결과와 구분해 읽습니다.",
+          "caption": "실패 요청을 추가하면 요청 도구 → 예제 API → status·body 순서로 확인합니다.",
           "lanes": [
             {
               "id": "bad-request-concept",
               "label": "400 의미 확인",
-              "description": "실행된 실패 흐름이 아니라 요청 형식 오류의 일반적인 해석 기준입니다.",
+              "description": "HTTP 실행 결과가 아닌 400 용어와 입력 점검 기준을 다룹니다.",
               "steps": [
                 {
                   "from": "learner",
@@ -467,22 +467,22 @@ window.visualLabData = {
           { "label": "확인", "value": "method · URL · body" }
         ],
         "evidence": "현재 starter에는 실패 요청이 없으므로 method, URL, JSON body 점검 기준과 400의 일반적인 의미를 구분해 읽습니다.",
-        "outcome": "실제 endpoint 응답으로 단정하지 않고 재현 요청이 있을 때 status와 body를 다시 확인합니다."
+        "outcome": "400은 요청 형식 문제를 뜻하지만 이 endpoint의 실제 응답은 재현 뒤에만 단정합니다."
       },
       {
         "id": "record-work",
         "label": "작업 기록과 DB 용어",
         "flowId": "git-db-flow",
         "tone": "signal",
-        "prompt": "다음 실습 전에 작업 위치와 데이터 표 구조를 어떤 증거로 설명할 수 있을까요?",
-        "observationTitle": "commit 기록과 table 구조가 다음 작업의 시작 상태를 설명하는가?",
+        "prompt": "Git 변경 파일과 members 표 예시가 준비되어 있습니다.",
+        "observationTitle": "작업 기록과 row 식별 기준",
         "reflection": {
-          "prompt": "Git 기록과 DB 표 용어가 재현 가능한 작업 상태를 만드는 규칙은 무엇일까요?",
+          "prompt": "본인 작업에서 commit과 PK가 각각 무엇을 다시 찾게 하는지 적어 보세요.",
           "hint": "commit은 선택한 변경을, PK는 한 row를 다시 찾는 기준을 보존합니다."
         },
         "theoryRef": "../../../theory.md#seq-00",
         "prediction": {
-          "prompt": "다음 실습 전에 작업과 데이터를 다시 찾게 해주는 증거 조합은 무엇일까요?",
+          "prompt": "변경 기록과 한 row를 다시 찾게 하는 식별 기준은 무엇일까요?",
           "options": [
             {
               "id": "history-only",
@@ -494,10 +494,10 @@ window.visualLabData = {
             }
           ],
           "answer": "commit-and-pk",
-          "explanation": "Git commit은 변경을 다시 찾고 PK는 테이블의 한 row를 다시 식별하게 합니다."
+          "explanation": "작업 이력과 데이터 row는 식별 대상이 달라 각각 버전 기록과 관계형 key가 필요합니다."
         },
         "diagram": {
-          "caption": "Git 작업 기록과 DB 표 용어는 서로 이어지는 시스템 호출이 아니라 다음 실습을 위한 두 개의 준비 과제입니다.",
+          "caption": "Git에서는 변경 → stage → commit을, DB에서는 table → row → PK를 각각 따라갑니다.",
           "lanes": [
             {
               "id": "git-practice",
@@ -612,7 +612,7 @@ window.visualLabData = {
           { "label": "DB 기준", "value": "table · row · column · PK" }
         ],
         "evidence": "starter/git/command-flow.txt와 starter/db/members-table-diagram.txt를 직접 따라갑니다.",
-        "outcome": "변경을 branch와 commit으로 설명하고 한 row를 PK로 다시 찾는 기준을 말할 수 있습니다."
+        "outcome": "commit은 작업 스냅샷을, PK는 table의 한 row를 다시 식별하게 합니다."
       }
     ]
   },
